@@ -1,5 +1,6 @@
 
-
+# Yo why does not every single language have list comprehensions?
+#
 def quicksort(arr):
     if len(arr) <= 1:
         return arr
