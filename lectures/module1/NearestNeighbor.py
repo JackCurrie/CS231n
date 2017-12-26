@@ -1,4 +1,5 @@
 import numpy as np
+import ipdb as db
 
 class NearestNeighbor(object):
     def __init__(self):
@@ -12,21 +13,28 @@ class NearestNeighbor(object):
         self.Xtr = X
         self.Ytr = y
 
-    def predict(self, X):
+    def predict(self, X, k=1):
         num_test = X.shape[0]
-        Y_pred = np.zeros(num_test, dtype=self.Ytr.dtype)
+        Y_pred = []
 
-        print("number of tests: %i", num_test)
+        print "number of tests: %i", num_test
+
         for i in xrange(num_test):
-
-            if 1 % 100 == 0:
-                print("test %i" % i)
-
-            # Find the nearest training image in the set to the current image
-            # Use the L1 distance (sum of absolute value difference)
             distances = np.sum(np.abs(self.Xtr - X[i, :]), axis = 1)
-            min_index = np.argmin(distances)
-            Y_pred[i] = self.Ytr[min_index] # predict the label of the nearest example
+
+            # Find the array indices of the 'k' lowest values in the "distances"
+            # list.
+            index = 0
+            indexed_distances = []
+            for value in distances:
+                indexed_distances.append((index, value))
+                index = index + 1
+
+            kNearestNeighbors = np.sort(distances)[:k]
+            indexList = [item for item, val in enumerate(indexed_distances) if val[1] in kNearestNeighbors]
+            Y_pred.append([self.Ytr[indexList]])
+
+            print len(indexList)
 
 
         return Y_pred
