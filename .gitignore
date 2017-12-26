@@ -1,3 +1,4 @@
 cifar10/
 *.swp
 .DS_Store
+*.pyc
