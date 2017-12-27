@@ -22,8 +22,13 @@ for k in [5, 10, 20, 50, 100]:
 
     nn = NearestNeighbor()
     nn.train(Xtr_rows, Ytr)
-    Y_predictions = nn.predict(Xte_rows)
+    Y_predictions = nn.predict(Xte_rows, k)
 
+    # So we are going to want to Adjust this because of the new output
+    # signature of the nn.predict method.
+    # I'm realizing more and more how much I actually do like cpp....
+    #
+    # Let's check out how the original image_class works out here first
     acc = np.mean(Y_predictions == Yval)
     print 'accuracy: %f' % (acc, )
 

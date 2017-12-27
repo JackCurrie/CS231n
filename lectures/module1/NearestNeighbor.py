@@ -6,18 +6,12 @@ class NearestNeighbor(object):
         pass
 
     def train(self, X, y):
-        # - y is simply a 1 dimensional array of values denoting the
-        #   class that hte object is in
-        # - The nearest neighbor classifier simply remembers all the training data
-        #   so no real action needs to be taken here
         self.Xtr = X
         self.Ytr = y
 
     def predict(self, X, k=1):
         num_test = X.shape[0]
         Y_pred = []
-
-        print "number of tests: %i", num_test
 
         for i in xrange(num_test):
             distances = np.sum(np.abs(self.Xtr - X[i, :]), axis = 1)
@@ -33,8 +27,5 @@ class NearestNeighbor(object):
             kNearestNeighbors = np.sort(distances)[:k]
             indexList = [item for item, val in enumerate(indexed_distances) if val[1] in kNearestNeighbors]
             Y_pred.append([self.Ytr[indexList]])
-
-            print len(indexList)
-
 
         return Y_pred
